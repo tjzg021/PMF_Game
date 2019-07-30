@@ -7,15 +7,15 @@ import GenerateRandomData as GenData
 from collections import Counter
 
 
-def PMF_solver(): #data, pid, teams_num):
+def PMF_solver(data, teams_num):
 
     
 
-    Data = GenData.GenerateRandomData(123)
+    #Data = GenData.GenerateRandomData(123)
+    # data = Data
+    # teams_num = 30
 
-    teams_num = 30
 
-    data = Data
 
 
 
@@ -46,8 +46,15 @@ def PMF_solver(): #data, pid, teams_num):
     ax1.set_ylabel('Y')
     plt.show()
     
-    # plt.hist(data,range=(1,30))
-    # plt.show()
+
     return pmf
 
-PMF_solver()
+
+def UpdatePMF(R, Output, Iteration, TotalRobot):
+
+    for i in range(1,TotalRobot+1):
+        R[i].DATA[Iteration] = Output[i]
+    R[i].PMF = PMF_solver( list( R[i].DATA.values() ), TotalRobot)
+
+
+#PMF_solver()
