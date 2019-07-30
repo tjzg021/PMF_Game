@@ -39,10 +39,10 @@ def Robot(R,Output, Iteration, TotalRobot):
 
     Score = {}
     for i in range(1,TotalRobot+1):
-        Score[i] = i/(FCM[i]* (np.log10(FCM[i]*) + 1) )
+        Score[i] = i/( FCM[i] * (np.log10(FCM[i]) + 1) )
     MaxScore = max(zip(Score.values().Score.keys()) )
 
-    UpdatePMF(R, Output, Iteration, TotalRobot):
+    UpdatePMF(R, Output, Iteration, TotalRobot)
     return MaxScore[1]
 
 def Game():
