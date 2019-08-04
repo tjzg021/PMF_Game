@@ -1,42 +1,28 @@
-import matplotlib.pyplot as plt
-
-
 import numpy as np
-import GenerateRandomData as GenData
-
+import matplotlib.pyplot as plt
 from collections import Counter
 
 
 def PMF_solver(data, teams_num):
 
-    
-
-    #Data = GenData.GenerateRandomData(123)
-    # data = Data
-    # teams_num = 30
-
-
-
-
-
-
     total = len(data)
-    Counter(data)
+    datacounter = Counter(data)
     print("len: %d" %(total))
 
     pmf = {}
-
-    for i in range(1,teams_num+1) :
-        pmf[i]=[]
-        print ( "i= %d    %d times" %(i,sum(data == i)) )
-
     Y = []
     for i in range(1,teams_num+1) :
-        print ("PMF for %d   %f" %(i,pmf[i]))
+        pmf[i] = datacounter[i]/total
         Y.append(pmf[i])
+        print ( "i= %d    %d times" %(i,datacounter[i]) )    #sum(data == i)) )
+        print ("PMF for %d   %f" %(i,pmf[i]))
 
+#    Y = []
+#    for i in range(1,teams_num+1) :
+#        print ("PMF for %d   %f" %(i,pmf[i]))
+#        Y.append(pmf[i])
 
-    X1 = range(1, 31)
+    X1 = range(1, teams_num+1)
     print (X1)
     print (len(Y),Y)
     fig1, ax1 = plt.subplots(1, 1, figsize=(10, 4))
@@ -46,7 +32,6 @@ def PMF_solver(data, teams_num):
     ax1.set_ylabel('Y')
     plt.show()
     
-
     return pmf
 
 
@@ -57,4 +42,3 @@ def UpdatePMF(R, Output, Iteration, TotalRobot):
     R[i].PMF = PMF_solver( list( R[i].DATA.values() ), TotalRobot)
 
 
-#PMF_solver()
