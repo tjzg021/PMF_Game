@@ -1,7 +1,7 @@
 import numpy as np
 
-import MCMC_solver
-import GenerateRandomData as GenData
+import PMF_solver
+import GenerateRandomData  as GenData
 
 
 class GameRobot:
@@ -28,16 +28,17 @@ def Robot(GR, Output, Iteration, TotalRobot):
     if Iteration < 500 :
         return np.random.randint(TotalRobot/2,TotalRobot)
     else:
-        for i in range(1,TotalRobot+1):
-            FCM[i] = 1
-            for j in range(1,TotalRobot+1):
+        for i in range(0,TotalRobot-1):
+            FCM[i] = 0
+            for j in range(0,TotalRobot-1):
+                PMF_solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
                 FCM[i] += GR[j].PMF[i]
 
     Score = {}
-    for i in range(1,TotalRobot):
-        Score[i] = i/( FCM[i] * (np.log10(FCM[i]) + 1) )
+    for i in range(0,TotalRobot-1):
+        Score[i] = (i+1)/( FCM[i] * (np.log10(FCM[i]) + 1) )
     MaxScore,outputvalue = max(zip(Score.values().Score.keys()) )
-    MCMC_solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
+    #PMF_solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
     return MaxScore,outputvalue
 
 
@@ -45,9 +46,9 @@ def Robot(GR, Output, Iteration, TotalRobot):
 def TestData(num, teams_num):
     numlist = []
     for i in range(1,num+1):
-        numlist.append(GenOutput_randint(teams_num))
-        numlist.append(GenOutput_normal(teams_num))
-        numlist.append(GenOutput_beta(teams_num))
+        numlist.append(GenData.GenOutput_randint(teams_num))
+        #numlist.append(GenData.GenOutput_normal(teams_num))
+        #numlist.append(GenData.GenOutput_beta(teams_num))
     print(numlist)
     return numlist
 
@@ -59,15 +60,15 @@ def TestDistrbution(teams_num):
 def TestRobot(teams_num):
     robot = {}
     Iteration = 20000
-    for i in range(1, teams_num):
+    for i in range(0, teams_num-1):
         robot[i] = GameRobot()
         robot[i].PID = i
         data = TestData(Iteration-1, teams_num)
-        for j in range(1, Iteration):
-            robot[i].DATA[Iteration] = data[j]
+        for j in range(0, Iteration-1):
+            robot[i].DATA[j] = data[j]
    
     currentiter = {}        
-    for i in range(1, teams_num):
+    for i in range(0, teams_num-1):
         currentiter[i] = TestData(1, teams_num)
         
     score,value = Robot(robot, currentiter, 20000, 12)

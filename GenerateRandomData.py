@@ -9,7 +9,7 @@ import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 
-import MCMC_solver
+#import PMF_solver
 
 def GenerateRandomData(inputseed):
     np.random.seed(inputseed)
@@ -21,9 +21,7 @@ def GenerateRandomData(inputseed):
     
     return RandomNum
     
-#Seed = 123
-#GenerateRandomData(Seed)
-    
+
 
 def GenOutput_randint(teams_num):
     #np.random.seed(seed)
@@ -43,14 +41,3 @@ def GenOutput_normal(teams_num):
     
     return RandomNum
 
-
-#def TestDistrbution(teams_num):
-#    Y = []
-#    for i in range(1,20000+1):
-#        Y.append(GenScore_normal(teams_num))
-#    print(Y)
-#    MCMC_solver.PMF_solver(Y,teams_num)
-    #fig1,ax1 = plt.subplots(1, 1, figsize=(10,4));
-    #ax1.scatter(X, Y);ax1.set_xlabel('X');ax1.set_ylabel('Y'); 
- 
-#TestDistrbution(12)
