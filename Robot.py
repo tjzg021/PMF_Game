@@ -3,7 +3,7 @@ import numpy as np
 import PMF_solver as Solver
 import GenerateRandomData  as GenData
 
-
+##########################################class of robot
 class GameRobot:
     PID = 0
     PMF = {}
@@ -21,7 +21,7 @@ class GameRobot:
     def GetDATA(self):
         return self.DATA
 
-
+##############################################caculte my output base on PMF
 def Robot(GR, Output, Iteration, TotalRobot):
     
     FCM = {}
@@ -36,33 +36,32 @@ def Robot(GR, Output, Iteration, TotalRobot):
         for i in range(0,TotalRobot):
             FCM[i] = 0
             for j in range(0,TotalRobot-1):
-                #print("PMF: %f %d %d"  %(GR[j].PMF[i],j,i))
-                #PMF_solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
                 FCM[i] += GR[j].PMF[i]
 
     Score = {}
     for i in range(0,TotalRobot):
         Score[i] = (i+1)/( FCM[i] * (np.log10(FCM[i]) + 1) )
+        print("Score caculate:%d %f %f score:%f"  %(i, FCM[i],np.log10(FCM[i]), Score[i] ) )
     MaxScore,outputvalue = max(zip(Score.values(),Score.keys()) )
     Solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
     return MaxScore,outputvalue
 
 
-
+##########################################generate test data for testing
 def TestData(num, teams_num):
     numlist = []
     for i in range(1,num+1):
         numlist.append(GenData.GenOutput_randint(teams_num))
         #numlist.append(GenData.GenOutput_normal(teams_num))
         #numlist.append(GenData.GenOutput_beta(teams_num))
-    #print("TestData",numlist)
     return numlist
 
+########################################## test PMF solver
 def TestDistrbution(teams_num):
     Y = TestData(20000, teams_num)
     MCMC_solver.PMF_solver(Y,teams_num)   
     
-
+##########################################   test robot
 def TestRobot(teams_num):
     robot = {}
     Iteration = 20000
@@ -77,10 +76,6 @@ def TestRobot(teams_num):
     for i in range(0, teams_num-1):        
         #for j in range(0,teams_num-1):
             robot[i].PMF = Solver.PMF_solver(robot[i].DATA.values(),teams_num) 
-    
-   # for i in range(0, teams_num):        
-   #     for j in range(0,teams_num-1):
-            #print("PMF: %f %d %d"  %(robot[j].PMF[i],j,i))  
               
     currentiter = {}        
     for i in range(0, teams_num):
