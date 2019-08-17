@@ -40,7 +40,7 @@ def Robot(GR, Output, Iteration, TotalRobot):
 
     Score = {}
     for i in range(0,TotalRobot):
-        Score[i] = (i+1)/( FCM[i] * (np.log10(FCM[i]) + 1) )
+        Score[i] = (i+1)/( (FCM[i]+1) * (np.log10(FCM[i]+1) + 1) )
         print("Score caculate:%d %f %f score:%f"  %(i, FCM[i],np.log10(FCM[i]), Score[i] ) )
     MaxScore,outputvalue = max(zip(Score.values(),Score.keys()) )
     Solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
@@ -59,7 +59,7 @@ def TestData(num, teams_num):
 ########################################## test PMF solver
 def TestDistrbution(teams_num):
     Y = TestData(20000, teams_num)
-    MCMC_solver.PMF_solver(Y,teams_num)   
+    Solver.PMF_solver(Y,teams_num)   
     
 ##########################################   test robot
 def TestRobot(teams_num):
