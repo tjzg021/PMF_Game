@@ -34,7 +34,7 @@ def Robot(GR, Output, Iteration, TotalRobot):
     else:
     
         for i in range(0,TotalRobot):
-            FCM[i] = 0
+            FCM[i] = 0.000001
             for j in range(0,TotalRobot-1):
                 FCM[i] += GR[j].PMF[i]
 
@@ -51,8 +51,8 @@ def Robot(GR, Output, Iteration, TotalRobot):
 def TestData(num, teams_num):
     numlist = []
     for i in range(1,num+1):
-        numlist.append(GenData.GenOutput_randint(teams_num))
-        #numlist.append(GenData.GenOutput_normal(teams_num))
+        #numlist.append(GenData.GenOutput_randint(teams_num))
+        numlist.append(GenData.GenOutput_normal(teams_num))
         #numlist.append(GenData.GenOutput_beta(teams_num))
     return numlist
 
@@ -74,7 +74,7 @@ def TestRobot(teams_num):
             robot[i].DATA[j] = data[j]
             
     for i in range(0, teams_num-1):        
-        #for j in range(0,teams_num-1):
+
             robot[i].PMF = Solver.PMF_solver(robot[i].DATA.values(),teams_num) 
               
     currentiter = {}        
@@ -83,7 +83,7 @@ def TestRobot(teams_num):
         print("TestData:%d"  %(currentiter[i]))
         
     score,value = Robot(robot, currentiter, 20000, 12)
-    print ("score: %f  value:%d" %(score,value))
+    print ("score: %f  value:%d" %(score,value+1))
     
     
 if __name__ == "__main__":
