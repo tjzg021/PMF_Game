@@ -1,11 +1,8 @@
 import argparse
-
 import math
 
 from myRobot import SRobot
-
 from myRobot import DummyRobot
-
 from Robot import initRobot
 
 
