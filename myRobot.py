@@ -1,5 +1,6 @@
 import numpy
 
+import GenerateRandomData  as GenData
 from Robot import  OurRobot
 
 
@@ -47,10 +48,25 @@ class DummyRobot:
 
 
     def cal_data(self,robot,currentiter,Iteration,TotalRobot):
-        if self.PID == TotalRobot -1 and Iteration >500:
+        if self.PID == TotalRobot -1:
             return TotalRobot
+        elif self.PID == TotalRobot -2:
+            return GenData.GenOutput_normal(TotalRobot)
+        elif self.PID == TotalRobot -3:
+            return GenData.GenOutput_beta(TotalRobot)
+        elif self.PID < TotalRobot -6:
+            seed = GenData.RandomData(Iteration)
+            if seed >=7:
+                return GenData.GenOutput_normal(TotalRobot)
+            elif seed >=4 or seed <7:
+                return GenData.GenOutput_beta(TotalRobot)
+            elif seed >=2 or seed <4:
+                return np.random.randint((TotalRobot+1) / 2, TotalRobot+1)
+            else: 
+                return TotalRobot - seed
         else:
-            return numpy.random.randint(1, self.robot_num + 1)
+            return GenData.GenOutput_beta(TotalRobot) #numpy.random.randint(1, TotalRobot + 1)
+            
 
 
 
