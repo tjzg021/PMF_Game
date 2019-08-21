@@ -35,14 +35,10 @@ class GameRobot:
 def OurRobot(GR, Output, Iteration, TotalRobot):
     FCM = {}
 
-    if Iteration < 501:
+    if Iteration < 51:
 
-        #if Iteration == 500:
-
-        #    for i in range(0, TotalRobot ):
-        #        GR[i].PMF == Solver.PMF_solver(GR[i].DATA.values(), TotalRobot)
         Solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
-        return np.random.randint((TotalRobot+1) / 2, TotalRobot+1)
+        return GenData.GenOutput_beta(TotalRobot) #np.random.randint((TotalRobot+1) / 2, TotalRobot+1)
 
     else:
 
@@ -54,12 +50,13 @@ def OurRobot(GR, Output, Iteration, TotalRobot):
                 FCM[i] += GR[j].PMF[i]
 
     Score = {}
-
+    print("PMF:",FCM)
+    
+    #print([round(i, 2) for i in FCM])
     for i in range(0, TotalRobot+1):
         Score[i] = (i + 1) / ((FCM[i] + 1) * (np.log10(FCM[i] + 1) + 1))
 
-        #print("Score caculate:%d %f %f score:%f" % (i, FCM[i], np.log10(FCM[i]), Score[i]))
-
+    print("SCore:",Score)
     MaxScore, outputvalue = max(zip(Score.values(), Score.keys()))
 
     Solver.UpdatePMF(GR, Output, Iteration, TotalRobot)
@@ -126,7 +123,7 @@ def TestRobot(teams_num):
     currentiter = {}
 
     for i in range(0, teams_num):
-        currentiter[i] = TestData(1, teams_num)[0]
+        currentiter[i] = TestData(6, teams_num)[0]
 
         print("TestData:%d" % (currentiter[i]))
 
@@ -136,6 +133,5 @@ def TestRobot(teams_num):
 
 
 if __name__ == "__main__":
-    # TestDistrbution(12)
-
+    #TestDistrbution(12)
     TestRobot(12)
