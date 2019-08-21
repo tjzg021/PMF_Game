@@ -11,14 +11,9 @@ import matplotlib.pyplot as plt
 
 #import PMF_solver
 
-def GenerateRandomData(inputseed):
+def RandomData(inputseed):
     np.random.seed(inputseed)
-    #n = np.random.normal(loc=0.0, scale=1, size=(3,3,3))
-    #RandomNum = np.random.normal(0.0, 0.1, 50)
-    RandomNum = np.random.randint(1,31,30)
-    print (RandomNum)
-    
-    
+    RandomNum = np.random.randint(0,10,1)
     return RandomNum
     
 
@@ -30,12 +25,12 @@ def GenOutput_randint(teams_num):
 
 def GenOutput_beta(teams_num):
    
-    RandomNum = max(int(np.random.beta(0.2,0.3) * teams_num),1)
+    RandomNum = max(int(np.random.beta(5,1) * teams_num),1)
     return RandomNum
 
 def GenOutput_normal(teams_num):
    
-    RandomNum = int(np.random.normal(teams_num/2,0.5) )
+    RandomNum = int(np.random.normal(teams_num*3/4.0,0.3) )
     RandomNum = min(RandomNum,teams_num)
     RandomNum = max(RandomNum,1)
     
